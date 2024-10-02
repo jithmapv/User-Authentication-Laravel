@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -37,3 +38,28 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 
 require __DIR__.'/auth.php';
+
+Route::resource('posts', PostController::class)->middleware('auth');
+
+
+// Display all posts
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+// Show create a post
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+
+// Store created post
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+// Display a specific post
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+
+// Show edit a specific post
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
+
+// Update a specific post
+Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
+
+// Delete a specific post
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
